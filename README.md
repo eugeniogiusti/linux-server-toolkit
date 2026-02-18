@@ -1,5 +1,12 @@
 # 🛠️ Linux Server Toolkit
 
+![Status](https://img.shields.io/badge/status-stable-brightgreen)
+![Last Commit](https://img.shields.io/github/last-commit/eugeniogiusti/linux-server-toolkit)
+![License](https://img.shields.io/github/license/eugeniogiusti/linux-server-toolkit)
+![Top Language](https://img.shields.io/github/languages/top/eugeniogiusti/linux-server-toolkit)
+![Stars](https://img.shields.io/github/stars/eugeniogiusti/linux-server-toolkit?style=social)
+![Bash](https://img.shields.io/badge/made%20with-Bash-4EAA25)
+
 Production-tested automation scripts for server administration, security hardening, and maintenance.
 
 ![Linux Server](screenshots/linux.png)
