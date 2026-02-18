@@ -5,12 +5,20 @@
 # compresses them into a zip file and sends to Discord for analysis
 
 # === CONFIG ===
+# ⚙️  Edit the values below before running the script:
+#   - DISCORD_WEBHOOK: your Discord webhook URL
+#   - APP_NAME: your Apache virtual host log name (e.g. myapp → /var/log/apache2/myapp.log)
+#   - LOG_DIR: path to system logs (default: /var/log)
+#   - LARAVEL_LOG_DIR: path to your Laravel logs directory
 DISCORD_WEBHOOK="YOUR_DISCORD_WEBHOOK_URL_HERE"
+APP_NAME="yourapp"
 HOSTNAME=$(hostname)
 DATE=$(date +%Y%m%d_%H%M%S)
 TODAY_LARAVEL=$(date +%Y-%m-%d)
 TEMP_DIR="/tmp/logs_${DATE}"
 ZIP_FILE="/tmp/server_logs_${DATE}.zip"
+LOG_DIR="/var/log"
+LARAVEL_LOG_DIR="/var/www/laravel-app/storage/logs"
 
 # === CREATE TEMPORARY DIRECTORY ===
 mkdir -p $TEMP_DIR
@@ -18,18 +26,17 @@ mkdir -p $TEMP_DIR
 # === COLLECT LOGS (last 300 lines) ===
 echo "📦 Collecting logs..."
 
-tail -300 /var/log/php8.4-fpm.log > $TEMP_DIR/php-fpm.log 2>/dev/null
-tail -300 /var/log/mysql/slow.log > $TEMP_DIR/mysql-slow.log 2>/dev/null
-tail -300 /var/log/mysql/error.log > $TEMP_DIR/mysql-error.log 2>/dev/null
-tail -300 /var/log/apache2/error.log > $TEMP_DIR/apache-error.log 2>/dev/null
-tail -300 /var/log/apache2/yourapp.log > $TEMP_DIR/yourapp.log 2>/dev/null
-tail -300 /var/log/apache2/yourapp.log > $TEMP_DIR/yourapp.log 2>/dev/null
-tail -300 /var/log/syslog > $TEMP_DIR/syslog.log 2>/dev/null
-tail -300 /var/log/redis/redis-server.log > $TEMP_DIR/redis.log 2>/dev/null
+tail -300 $LOG_DIR/php8.4-fpm.log > $TEMP_DIR/php-fpm.log 2>/dev/null
+tail -300 $LOG_DIR/mysql/slow.log > $TEMP_DIR/mysql-slow.log 2>/dev/null
+tail -300 $LOG_DIR/mysql/error.log > $TEMP_DIR/mysql-error.log 2>/dev/null
+tail -300 $LOG_DIR/apache2/error.log > $TEMP_DIR/apache-error.log 2>/dev/null
+tail -300 $LOG_DIR/apache2/${APP_NAME}.log > $TEMP_DIR/${APP_NAME}.log 2>/dev/null
+tail -300 $LOG_DIR/syslog > $TEMP_DIR/syslog.log 2>/dev/null
+tail -300 $LOG_DIR/redis/redis-server.log > $TEMP_DIR/redis.log 2>/dev/null
 
 # === TODAY'S LARAVEL LOGS ===
-cp /var/www/laravel-app/storage/logs/laravel-${TODAY_LARAVEL}.log $TEMP_DIR/laravel-today.log 2>/dev/null
-cp /var/www/laravel-app/storage/logs/security-${TODAY_LARAVEL}.log $TEMP_DIR/security-today.log 2>/dev/null
+cp $LARAVEL_LOG_DIR/laravel-${TODAY_LARAVEL}.log $TEMP_DIR/laravel-today.log 2>/dev/null
+cp $LARAVEL_LOG_DIR/security-${TODAY_LARAVEL}.log $TEMP_DIR/security-today.log 2>/dev/null
 
 # === ADD SYSTEM INFO ===
 cat > $TEMP_DIR/system-info.txt << EOF
