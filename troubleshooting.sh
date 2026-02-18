@@ -8,10 +8,12 @@
 # ⚙️  Edit the values below before running the script:
 #   - DISCORD_WEBHOOK: your Discord webhook URL
 #   - APP_NAME: your Apache virtual host log name (e.g. myapp → /var/log/apache2/myapp.log)
+#   - PHP_VERSION: your PHP version (e.g. 8.4)
 #   - LOG_DIR: path to system logs (default: /var/log)
 #   - LARAVEL_LOG_DIR: path to your Laravel logs directory
 DISCORD_WEBHOOK="YOUR_DISCORD_WEBHOOK_URL_HERE"
 APP_NAME="yourapp"
+PHP_VERSION="8.4"
 HOSTNAME=$(hostname)
 DATE=$(date +%Y%m%d_%H%M%S)
 TODAY_LARAVEL=$(date +%Y-%m-%d)
@@ -26,7 +28,7 @@ mkdir -p $TEMP_DIR
 # === COLLECT LOGS (last 300 lines) ===
 echo "📦 Collecting logs..."
 
-tail -300 $LOG_DIR/php8.4-fpm.log > $TEMP_DIR/php-fpm.log 2>/dev/null
+tail -300 $LOG_DIR/php${PHP_VERSION}-fpm.log > $TEMP_DIR/php-fpm.log 2>/dev/null
 tail -300 $LOG_DIR/mysql/slow.log > $TEMP_DIR/mysql-slow.log 2>/dev/null
 tail -300 $LOG_DIR/mysql/error.log > $TEMP_DIR/mysql-error.log 2>/dev/null
 tail -300 $LOG_DIR/apache2/error.log > $TEMP_DIR/apache-error.log 2>/dev/null
