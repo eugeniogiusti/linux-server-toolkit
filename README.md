@@ -10,8 +10,9 @@
 Production-tested automation scripts for server administration, security hardening, and maintenance.
 
 <p align="center">
-  <img src="screenshots/linux.png" alt="Linux Server" width="45%" />
-  <img src="screenshots/crowdsec.png" alt="CrowdSec Logo" width="45%" />
+  <img src="screenshots/linux.png" alt="Linux Server" width="30%" />
+  <img src="screenshots/crowdsec.png" alt="CrowdSec Logo" width="30%" />
+  <img src="screenshots/mysql.png" alt="MySQL Logo" width="30%" />
 </p>
 
 
@@ -28,7 +29,10 @@ Production-tested automation scripts for server administration, security hardeni
 - **MySQL Monthly Optimizer** (`mysql-maint-monthly.sh`) - Automated OPTIMIZE TABLE on all databases for better performance
 
 ### 🔄 System Maintenance  
-![Server Maintenance](screenshots/server.png)
+<p align="center">
+  <img src="screenshots/server.png" alt="Server Maintenance" width="45%" />
+  <img src="screenshots/mysql.png" alt="MySQL Logo" width="45%" />
+</p>
 
 - **System Update Checker** (`check-updates.sh`) - Monitor available system updates
 
