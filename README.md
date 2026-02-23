@@ -12,7 +12,6 @@ Production-tested automation scripts for server administration, security hardeni
 <p align="center">
   <img src="screenshots/linux.png" alt="Linux Server" width="30%" />
   <img src="screenshots/crowdsec.png" alt="CrowdSec Logo" width="30%" />
-  <img src="screenshots/mysql.png" alt="MySQL Logo" width="30%" />
 </p>
 
 
