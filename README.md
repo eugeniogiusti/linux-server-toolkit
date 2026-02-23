@@ -74,7 +74,6 @@ Production-tested automation scripts for server administration, security hardeni
 - MySQL/MariaDB (for database scripts)
 - curl (for Discord notifications)
 - Discord webhook (optional, for notifications)
-- `apt` + `systemd` required for `crowdsec-setup.sh`
 
 
 ⭐ **If these scripts save you time, consider giving the repo a star!**
