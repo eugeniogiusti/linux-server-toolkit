@@ -19,6 +19,7 @@ Production-tested automation scripts for server administration, security hardeni
 - **Security Monitor** (`security-monitor.sh`) - Automated security checks and threat detection
 - **ModSecurity Updates** (`update-modsec-crs.sh`) - Keep OWASP CRS rules up to date
 - **OWASP Update Checker** (`check-owasp-updates.sh`) - Monitor for new security rule releases
+- **CrowdSec Setup** (`crowdsec-setup.sh`) - Install CrowdSec + firewall bouncer, enable services, and run post-install checks
 
 ### 🗄️ Database Maintenance
 - **MySQL Monthly Optimizer** (`mysql-maint-monthly.sh`) - Automated OPTIMIZE TABLE on all databases for better performance
@@ -67,6 +68,7 @@ Production-tested automation scripts for server administration, security hardeni
 - MySQL/MariaDB (for database scripts)
 - curl (for Discord notifications)
 - Discord webhook (optional, for notifications)
+- `apt` + `systemd` required for `crowdsec-setup.sh`
 
 
 ⭐ **If these scripts save you time, consider giving the repo a star!**
