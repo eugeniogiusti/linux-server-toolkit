@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# CrowdSec setup script
+# Installs CrowdSec + firewall bouncer, enables services, and runs basic checks
+
+# If not root, use sudo when available
 if [[ "${EUID}" -ne 0 ]]; then
   if command -v sudo >/dev/null 2>&1; then
     SUDO="sudo"
@@ -12,6 +16,7 @@ else
   SUDO=""
 fi
 
+# Check required commands
 for cmd in curl apt systemctl; do
   if ! command -v "${cmd}" >/dev/null 2>&1; then
     echo "Error: required command not found: ${cmd}"
@@ -19,27 +24,34 @@ for cmd in curl apt systemctl; do
   fi
 done
 
+# Install CrowdSec repository
 echo "[1/8] Installing CrowdSec repository..."
 curl -s https://install.crowdsec.net | ${SUDO} sh
 
+# Install CrowdSec engine
 echo "[2/8] Installing crowdsec..."
 ${SUDO} apt install -y crowdsec
 
+# Install firewall bouncer (iptables)
 echo "[3/8] Installing firewall bouncer (iptables)..."
 ${SUDO} apt install -y crowdsec-firewall-bouncer-iptables
 
+# Enable and start CrowdSec service
 echo "[4/8] Enabling + starting crowdsec..."
 ${SUDO} systemctl enable crowdsec
 ${SUDO} systemctl start crowdsec
 
+# Enable and start firewall bouncer service
 echo "[5/8] Enabling + starting crowdsec-firewall-bouncer..."
 ${SUDO} systemctl enable crowdsec-firewall-bouncer
 ${SUDO} systemctl start crowdsec-firewall-bouncer
 
+# Show service status
 echo "[6/8] Service status..."
 ${SUDO} systemctl status crowdsec --no-pager || true
 ${SUDO} systemctl status crowdsec-firewall-bouncer --no-pager || true
 
+# Run cscli checks if available
 if command -v cscli >/dev/null 2>&1; then
   echo "[7/8] Checking cscli..."
   ${SUDO} cscli metrics || true
@@ -49,6 +61,7 @@ else
   echo "[7/8] cscli not found, skipping metrics/collections/scenarios."
 fi
 
+# Final reminder for CrowdSec Console enrollment
 echo "[8/8] Done."
 echo
 echo "Hey: go to https://app.crowdsec.net and sign up,"
