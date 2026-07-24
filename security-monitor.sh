@@ -80,7 +80,7 @@ send_alert() {
 # 1. MONITOR NEW USERS
 # ============================================
 check_new_users() {
-    local current_users=$(cut -d: -f1 /etc/passwd | sort)
+    local current_users=$(cut -d: -f1 /etc/passwd | LC_ALL=C sort)
     local user_file="$STATE_DIR/users.txt"
     
     if [ -f "$user_file" ]; then
@@ -132,7 +132,7 @@ check_critical_files() {
     "/etc/shadow"
     "/etc/mysql/my.cnf"
     "/etc/apache2/apache2.conf"
-    "/etc/apache2/sites-enabled/*.conf"
+    /etc/apache2/sites-enabled/*.conf
     "/etc/ssh/sshd_config"
 )
     
